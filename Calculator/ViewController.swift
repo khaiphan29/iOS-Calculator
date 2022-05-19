@@ -24,6 +24,8 @@ class ViewController: UIViewController {
     
     @IBOutlet weak var displayLabel: UILabel!
     func display(_ num: Float) {
+        //print (num)
+        //print (Int(num))
         if num == Float(Int(num)) {
             displayLabel.text = String(Int(num))
         }
@@ -55,7 +57,7 @@ class ViewController: UIViewController {
         case "+/-":
             firstEle = -firstEle
             //display(str: String(firstEle))
-        case "/":
+        case "÷":
             if let tempEle = secondEle {
                 if tempEle == 0.0 {
                     displayText("Error")
@@ -73,11 +75,11 @@ class ViewController: UIViewController {
             firstEle = firstEle + secondEle
         default:
             break
-
+            
         }
         display(firstEle)
         clean()
-            
+        
     }
     
     
@@ -91,7 +93,7 @@ class ViewController: UIViewController {
         op = "%"
         calculate()
         firstEle = 0
-            
+        
     }
     
     @IBAction func opositeButtonPressed(_ sender: UIButton) {
@@ -111,35 +113,18 @@ class ViewController: UIViewController {
         display(0)
     }
     
-    func calculateButtonPressed (_ button: UIButton,_ op_str: String) {
+    @IBAction func binButtonPressed(_ sender: UIButton) {
         if self.op != nil && secondEle == nil {
             return
         }
         if secondEle != nil {
             calculate()
         }
-        button.backgroundColor = UIColor.systemPink
-        self.op = op_str
+        sender.backgroundColor = UIColor.systemPink
+        self.op = sender.currentTitle!
         isFraction = false
     }
     
-
-    @IBAction func divideButtonPressed(_ sender: UIButton) {
-        calculateButtonPressed(divideButton, "/")
-    }
-    
-    @IBAction func multiplyButtonPressed(_ sender: UIButton) {
-        calculateButtonPressed(multiplyButton, "x")
-    }
-    
-    @IBAction func minusButtonPressed(_ sender: UIButton) {
-        calculateButtonPressed(minusButton, "-")
-    }
-    
-    @IBAction func plusButtonPressed(_ sender: UIButton) {
-        calculateButtonPressed(plusButton, "+")
-    }
-
     
     func addNum (_ number: Float) {
         if op == nil {
@@ -197,44 +182,8 @@ class ViewController: UIViewController {
     }
     
     
-    @IBAction func oneButtonPressed(_ sender: UIButton) {
-        addNum(1)
-    }
-    
-    @IBAction func twoButtonPressed(_ sender: UIButton) {
-        addNum(2)
-    }
-    
-    @IBAction func threeButtonPressed(_ sender: UIButton) {
-        addNum(3)
-    }
-    
-    @IBAction func fourButtonPressed(_ sender: UIButton) {
-        addNum(4)
-    }
-    
-    @IBAction func fiveButtonPressed(_ sender: UIButton) {
-        addNum(5)
-    }
-    
-    @IBAction func sixButtonPressed(_ sender: UIButton) {
-        addNum(6)
-    }
-    
-    @IBAction func sevenButtonPressed(_ sender: UIButton) {
-        addNum(7)
-    }
-    
-    @IBAction func eightButtonPressed(_ sender: UIButton) {
-        addNum(8)
-    }
-    
-    @IBAction func nineButtonPressed(_ sender: UIButton) {
-        addNum(9)
-    }
-    
-    @IBAction func zeroButtonPressed(_ sender: UIButton) {
-        addNum(0)
+    @IBAction func numButtonPressed(_ sender: UIButton) {
+        addNum(Float(sender.currentTitle!)!)
     }
     
     @IBAction func fractionButtonPressed(_ sender: UIButton) {
@@ -245,11 +194,9 @@ class ViewController: UIViewController {
         if op != nil {
             if op == "%" || op == "+/-" {
                 calculate()
-                firstEle = 0
             }
             else if secondEle != nil {
                 calculate()
-                firstEle = 0
             }
         }
     }
